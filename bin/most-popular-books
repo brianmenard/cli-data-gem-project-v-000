@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+#loads all required files
+require "bundler/setup"
+require "most_popular_books"
+
+MostPopularBooks::CLI.new.call
