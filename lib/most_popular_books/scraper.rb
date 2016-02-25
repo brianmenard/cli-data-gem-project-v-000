@@ -28,7 +28,10 @@ class Scraper
     amazon_book.url = amazon_doc.css("div.zg_title a").attribute("href").value
 
     details_page = Nokogiri::HTML(open(URI.parse(amazon_book.url)))
-    amazon_book.synopsis = details_page.css("div.productDescriptionWrapper").first.text
+    #NOT WORKING
+    amazon_book.synopsis = details_page.css("#iframeContent")
+    #
+    #puts amazon_book.synopsis
     add_scraped_book(amazon_book)
   end
 
@@ -38,7 +41,12 @@ class Scraper
     nytimes_book.source = "New York Times Best Seller"
     nytimes_book.title = nytimes_doc.css("span.s9TitleText").first.text.strip
     nytimes_book.author = nytimes_doc.css("div.a-row.a-size-small").first.text.strip
-    #nytimes_book.url = nytimes_doc.css("zg_title a").attribute("href")
+    nytimes_book.url = nytimes_doc.css("a.ntTitle").first.attribute("href").value
+
+    details_page = Nokogiri::HTML(open(URI.parse("http://www.amazon.com#{nytimes_book.url}")))
+    #synopsis is embedded within an iframe, can't figure out how to get extract it
+    nytimes_book.synopsis = details_page.css("div.productDescriptionWrapper").first.text.strip
+    #puts nytimes_book.synopsis
     add_scraped_book(nytimes_book)
   end
 
@@ -48,7 +56,10 @@ class Scraper
     bn_book.source = "Barnes and Noble Best Seller"
     bn_book.title = bn_doc.css("div.product-info h2 a").first.text.strip
     bn_book.author = bn_doc.css("span.contributor a").first.text.strip
-    #bn_book.url = bn_doc.css("zg_title a").attribute("href")
+    bn_book.url = bn_doc.css(".product-info a").attribute("href").value
+
+    details_page = Nokogiri::HTML(open(URI.parse("http://www.barnesandnoble.com#{bn_book.url}")))
+    bn_book.synopsis = details_page.css("div.overview-desc p").text.strip
     add_scraped_book(bn_book)
   end
 
@@ -58,7 +69,10 @@ class Scraper
     goodreads_book.source = "Goodreads Most Popular"
     goodreads_book.title = goodreads_doc.css("a.bookTitle").first.text.strip
     goodreads_book.author = goodreads_doc.css("a.authorName").first.text.strip
-    #bn_book.url = bn_doc.css("zg_title a").attribute("href")
+    goodreads_book.url = goodreads_doc.css("a.bookTitle").first.attribute("href").value
+
+    details_page = Nokogiri::HTML(open(URI.parse("http://www.goodreads.com#{goodreads_book.url}")))
+    goodreads_book.synopsis = details_page.css("div#description").text.strip
     add_scraped_book(goodreads_book)
   end
 
