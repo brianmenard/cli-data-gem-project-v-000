@@ -9,11 +9,12 @@ class MostPopularBooks::CLI
   end
 
   def list_books
-    puts "Today's most popular books:"
+    puts "Today's NYTimes best selling books:"
     @books = MostPopularBooks::Book.get_books
     @books.each.with_index(1) do |book, index|
-      puts "#{index}. #{book.source}: #{book.title} - #{book.author}"
+      puts "#{index}. #{book.category}: #{book.title} by #{book.author}"
     end
+    puts "\n"
   end
 
   def menu
@@ -23,11 +24,20 @@ class MostPopularBooks::CLI
     input = gets.strip.downcase
       if input.to_i > 0
         the_book = @books[input.to_i-1]
-        puts "#{the_book.title} - #{the_book.author}"
+        puts "-----------------------------"
+        puts "#{the_book.title} \nby #{the_book.author}"
+        puts "Buy URL: #{the_book.url}"
+        puts "-----------------------------"
+        puts "Synopsis: "
+        the_book.synopsis.each do |paragraph| #prints well-formatted synopsis
+          puts "    #{paragraph.to_s}"
+          puts "\n"
+        end
+        puts "-----------------------------"
         elsif input == "list"
         list_books
         else
-        puts "Not a recognized command, type list or exit: "
+        puts "Not a recognized command, type list or exit: " unless input == "exit" 
       end
     end
   end
