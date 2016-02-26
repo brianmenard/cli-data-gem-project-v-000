@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'most_popular_books/version'
+require 'bestselling_books/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "most_popular_books"
-  spec.version       = MostPopularBooks::VERSION
+  spec.version       = BestsellingBooks::VERSION
   spec.authors       = ["brianmenard"]
   spec.email         = ["useyourbrian@gmail.com"]
 

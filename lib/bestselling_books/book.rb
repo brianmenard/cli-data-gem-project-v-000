@@ -1,6 +1,6 @@
 require_relative './scraper.rb'
 
-class MostPopularBooks::Book
+class BestsellingBooks::Book
   attr_accessor :title, :author, :url, :category, :synopsis, :overview
   @@book_list = []
   

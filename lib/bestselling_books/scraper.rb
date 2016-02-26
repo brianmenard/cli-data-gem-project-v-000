@@ -15,7 +15,7 @@ class Scraper
     barnesandnoble_doc = Nokogiri::HTML(open("http://www.barnesandnoble.com/b/the-new-york-times-bestsellers/_/N-1p3n"))
     sections_array = barnesandnoble_doc.css("section#hotBooksWithDesc").to_a
     sections_array.each do |section|
-      book = MostPopularBooks::Book.new
+      book = BestsellingBooks::Book.new
       book.url = "http://www.barnesandnoble.com#{section.css("li h2 a").attribute("href").value}"
       details_page = Nokogiri::HTML(open(book.url))
       #Gets title from details page, since titles on main page are sometimes truncated

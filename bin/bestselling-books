@@ -2,6 +2,6 @@
 
 #loads all required files
 require "bundler/setup"
-require "most_popular_books"
+require "bestselling_books"
 
-MostPopularBooks::CLI.new.call
+BestsellingBooks::CLI.new.call
